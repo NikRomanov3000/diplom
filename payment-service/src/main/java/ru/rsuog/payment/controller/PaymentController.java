@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import ru.rsuog.model.PaymentInfo;
 import ru.rsuog.payment.model.Payment;
 import ru.rsuog.payment.service.PaymentService;
 
