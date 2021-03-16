@@ -1,4 +1,4 @@
-package ru.rsuog.payment.model;
+package ru.rsu.payment.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;

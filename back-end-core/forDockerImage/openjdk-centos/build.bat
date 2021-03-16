@@ -1,0 +1,1 @@
+docker build --tag=back-end-core-docker-centos --rm=true .

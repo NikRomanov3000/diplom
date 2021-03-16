@@ -1,4 +1,4 @@
-package ru.rsuog.payment.controller;
+package ru.rsu.payment.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,9 +21,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import ru.rsu.payment.model.Payment;
+import ru.rsu.payment.service.PaymentService;
 import ru.rsuog.model.PaymentInfo;
-import ru.rsuog.payment.model.Payment;
-import ru.rsuog.payment.service.PaymentService;
 
 @RestController
 @RequestMapping("/api")

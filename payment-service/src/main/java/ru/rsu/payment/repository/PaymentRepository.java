@@ -1,9 +1,9 @@
-package ru.rsuog.payment.repository;
+package ru.rsu.payment.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import ru.rsuog.payment.model.Payment;
+import ru.rsu.payment.model.Payment;
 
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment, Long> {

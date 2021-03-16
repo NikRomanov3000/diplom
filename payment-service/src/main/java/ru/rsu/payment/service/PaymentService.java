@@ -1,9 +1,9 @@
-package ru.rsuog.payment.service;
+package ru.rsu.payment.service;
 
 import java.util.List;
 import java.util.Optional;
 
-import ru.rsuog.payment.model.Payment;
+import ru.rsu.payment.model.Payment;
 
 public interface PaymentService {
   List<Payment> getAllPayment();

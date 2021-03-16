@@ -1,4 +1,4 @@
-package ru.rsuog.payment.config;
+package ru.rsu.payment.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

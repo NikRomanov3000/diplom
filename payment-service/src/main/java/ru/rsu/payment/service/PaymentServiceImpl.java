@@ -1,4 +1,4 @@
-package ru.rsuog.payment.service;
+package ru.rsu.payment.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -6,8 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import ru.rsuog.payment.model.Payment;
-import ru.rsuog.payment.repository.PaymentRepository;
+import ru.rsu.payment.model.Payment;
+import ru.rsu.payment.repository.PaymentRepository;
 
 @Service
 @Transactional(readOnly = true)
