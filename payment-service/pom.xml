@@ -12,11 +12,6 @@
     <properties>
         <java.version>15</java.version>
         <liquibase.propertyFile>src/main/resources/liquibase-maven-plugin.properties</liquibase.propertyFile>
-        <timestamp>${maven.build.timestamp}</timestamp>
-        <database.url>jdbc:postgresql://localhost:5432/payment-service</database.url>
-        <database.user>postgres</database.user>
-        <database.password>Tolstochok3000</database.password>
-        <maven.build.timestamp.format>yyyyMMdd-HHmmssSSS</maven.build.timestamp.format>
     </properties>
 
     <parent>
@@ -87,6 +82,9 @@
                 <version>4.3.1</version>
                 <configuration>
                     <propertyFile>${liquibase.propertyFile}</propertyFile>
+                    <systemProperties>
+                        <user.name>pepperoni_dog</user.name>
+                    </systemProperties>
                 </configuration>
                 <dependencies>
                     <dependency>

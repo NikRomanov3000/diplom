@@ -1,0 +1,32 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet context="legacy" author="n.romanov" id="add payment table">
+        <createTable tableName="receipt">
+
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="debt_amount" type="INT"/>
+            <column name="active_amount" type="INT"/>
+            <column name="dispatch_dt" type="Date"/>
+            <column name="receipt_status" type="INT"/>
+            <column name="r_address_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="n.romanov"
+               id="table.address.fk_address">
+        <addForeignKeyConstraint baseColumnNames="r_address_id"
+                                 baseTableName="receipt"
+                                 constraintName="fk_receipt_address"
+                                 onDelete="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="address"/>
+    </changeSet>
+</databaseChangeLog>

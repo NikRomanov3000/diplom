@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>15</java.version>
+        <liquibase.propertyFile>src/main/resources/liquibase-maven-plugin.properties</liquibase.propertyFile>
     </properties>
 
     <build>
@@ -64,6 +65,29 @@
                     <source>15</source>
                     <target>15</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>4.3.1</version>
+                <configuration>
+                    <propertyFile>${liquibase.propertyFile}</propertyFile>
+                    <systemProperties>
+                        <user.name>pepperoni_dog</user.name>
+                    </systemProperties>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.liquibase.ext</groupId>
+                        <artifactId>liquibase-hibernate5</artifactId>
+                        <version>3.10.2</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-data-jpa</artifactId>
+                        <version>2.4.3</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
