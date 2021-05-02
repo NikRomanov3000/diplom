@@ -11,7 +11,7 @@ public class Payment {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @JsonProperty("id")
-  @Column(name = "id")
+  @Column(name = "id", nullable = false)
   private Long id;
 
   @Column(name = "amount")
@@ -22,7 +22,7 @@ public class Payment {
   @JsonProperty("paymentDate")
   private LocalDate paymentDate;
 
-  @Column(name = "r_receipt_id", updatable = false)
+  @Column(name = "r_receipt_id", updatable = false, nullable = false)
   @JsonProperty(required = true, value = "receiptId" )
   private Long refReceiptId;
 
