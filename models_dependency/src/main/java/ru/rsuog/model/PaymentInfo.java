@@ -13,6 +13,12 @@ public class PaymentInfo {
   @JsonProperty("isDeleted")
   private boolean isDeleted;
 
+  @JsonProperty("errorMsg")
+  private String errorMsg;
+
+  @JsonProperty("statusCode")
+  private int statusCode;
+
   public PaymentInfo() {
   }
 
@@ -46,12 +52,30 @@ public class PaymentInfo {
     isDeleted = deleted;
   }
 
+  public String getErrorMsg() {
+    return errorMsg;
+  }
+
+  public void setErrorMsg(String errorMsg) {
+    this.errorMsg = errorMsg;
+  }
+
+  public int getStatusCode() {
+    return statusCode;
+  }
+
+  public void setStatusCode(int statusCode) {
+    this.statusCode = statusCode;
+  }
+
   @Override
   public String toString() {
     return "PaymentInfo{" +
         "receiptId=" + receiptId +
         ", amount=" + amount +
         ", isDeleted=" + isDeleted +
+        ", errorMsg='" + errorMsg + '\'' +
+        ", statusCode=" + statusCode +
         '}';
   }
 }

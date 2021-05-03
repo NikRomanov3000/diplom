@@ -7,4 +7,8 @@
     <include file="db.person-table.xml" relativeToChangelogFile="true"/>
     <include file="db.address-table.xml" relativeToChangelogFile="true"/>
     <include file="db.receipt-table.xml" relativeToChangelogFile="true"/>
+
+    <include file="db.person-initData.xml" relativeToChangelogFile="true"/>
+    <include file="db.address-initData.xml" relativeToChangelogFile="true"/>
+    <include file="db.receipt-initData.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

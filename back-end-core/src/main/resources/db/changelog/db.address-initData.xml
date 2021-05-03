@@ -4,15 +4,11 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
-    <changeSet context="legacy" author="n.romanov" id="add person table">
-        <createTable tableName="person">
-
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="passport_number" type="INT"/>
-            <column name="passport_serial" type="INT"/>
-            <column name="person_name" type="varchar(255)"/>
-        </createTable>
+    <changeSet context="legacy" author="n.romanov" id="insert initData to address table">
+        <insert tableName="address">
+            <column name="id" valueNumeric="1"/>
+            <column name="full_address" value="LA Dungeon"/>
+            <column name="r_person_id" valueNumeric="1"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>

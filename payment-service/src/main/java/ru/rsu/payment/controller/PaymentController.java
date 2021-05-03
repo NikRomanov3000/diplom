@@ -39,12 +39,11 @@ public class PaymentController {
 
   @PostMapping({ "/payment" })
   public Long savePayment(@RequestBody Payment payment) throws Exception {
-    Long retId = null;
+    Long retId;
     try {
-      retId = paymentService.addPayment(payment).getId();
       PaymentInfo paymentInfo = new PaymentInfo(payment.getRefReceiptId(), payment.getAmount(),
                                                 false);
-      paymentService.sendPaymentInformationByRestTemplate(paymentInfo);
+      retId = paymentService.sendPaymentInformationByRabbitMQ(paymentInfo, payment);
     } catch (Exception ex) {
       logger.error(ex.getMessage());
       throw new Exception(ex);
@@ -61,8 +60,7 @@ public class PaymentController {
       Payment payment = paymentService.getPaymentById(id).get();
       PaymentInfo paymentInfo = new PaymentInfo(payment.getRefReceiptId(), payment.getAmount(),
                                                 true);
-      paymentService.sendPaymentInformationByRestTemplate(paymentInfo);
-      paymentService.removePaymentById(id);
+      paymentService.sendPaymentInformationByRabbitMQ(paymentInfo, payment);
     } catch (Exception ex) {
       logger.error(ex.getMessage());
       throw new Exception(ex);

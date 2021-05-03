@@ -14,5 +14,5 @@ public interface PaymentService {
   Payment addPayment(Payment payment);
   void removePaymentById(long id);
   void sendPaymentInformationByRestTemplate(PaymentInfo paymentInfo) throws JsonProcessingException;
-  void sendPaymentInformationByRabbitMQ(PaymentInfo paymentInfo) throws JsonProcessingException;
+  Long sendPaymentInformationByRabbitMQ(PaymentInfo paymentInfo, Payment payment) throws JsonProcessingException;
 }

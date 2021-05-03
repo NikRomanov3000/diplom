@@ -1,13 +1,16 @@
 package ru.rsu.payment.service;
 
+import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,24 +49,38 @@ public class PaymentServiceImpl implements PaymentService {
   }
 
   @Override
-  @Transactional
   public Payment addPayment(Payment payment) {
     return paymentRepository.save(payment);
   }
 
   @Override
-  @Transactional
   public void removePaymentById(long id) {
     paymentRepository.deleteById(id);
   }
 
-  public void sendPaymentInformationByRabbitMQ(PaymentInfo paymentInfo) throws
-      JsonProcessingException {
+  @Override
+  @Transactional
+  public Long sendPaymentInformationByRabbitMQ(PaymentInfo paymentInfo, Payment payment)
+      throws JsonProcessingException {
     ObjectMapper objectMapper = new ObjectMapper();
     String message = objectMapper.writeValueAsString(paymentInfo);
-    templateForMessage.convertAndSend("paymentQueue", message);
-
+    String response = (String) templateForMessage.convertSendAndReceive("paymentQueue", message);
     logger.info("Send new message to RabbitMQ. Queue = paymentQueue. Message: " + message);
+
+    PaymentInfo responseObj = objectMapper.readValue(response, PaymentInfo.class);
+
+    if(Strings.isBlank(responseObj.getErrorMsg())){
+      if(!paymentInfo.isDeleted()){
+        return addPayment(payment).getId();
+      } else{
+        removePaymentById(payment.getId());
+        return payment.getId();
+      }
+    }
+
+    String errorMsg = "back-end-service return exception: " + responseObj.getErrorMsg();
+
+    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, errorMsg);
   }
 
   public void sendPaymentInformationByRestTemplate(PaymentInfo paymentInfo)

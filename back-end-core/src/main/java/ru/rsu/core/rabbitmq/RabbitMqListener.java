@@ -23,7 +23,7 @@ public class RabbitMqListener {
   }
 
   @RabbitListener(queues = "paymentQueue")
-  public void processPaymentQueue(String message) throws Exception {
+  public String processPaymentQueue(String message) throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
     PaymentInfo paymentInfoFromRabbit;
 
@@ -32,9 +32,14 @@ public class RabbitMqListener {
     try {
       paymentInfoFromRabbit = objectMapper.readValue(message, PaymentInfo.class );
     } catch (JsonProcessingException ex){
-      throw new RuntimeException("Message from RabbitMQ does not match PaymentInfo format");
+      PaymentInfo errorResponse = new PaymentInfo();
+      errorResponse.setErrorMsg("Message from RabbitMQ does not match PaymentInfo format");
+      errorResponse.setStatusCode(500);
+      logger.error(errorResponse.getErrorMsg());
+
+      return objectMapper.writeValueAsString(errorResponse);
     }
 
-    receiptService.updateReceipt(paymentInfoFromRabbit);
+    return  objectMapper.writeValueAsString(receiptService.updateReceipt(paymentInfoFromRabbit));
   }
 }

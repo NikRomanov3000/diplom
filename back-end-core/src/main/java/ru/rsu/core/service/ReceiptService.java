@@ -15,7 +15,7 @@ public interface ReceiptService {
 
   void removeReceiptById(long id);
 
-  void updateReceipt(PaymentInfo paymentInfo) throws Exception;
+  PaymentInfo updateReceipt(PaymentInfo paymentInfo) throws Exception;
 
   void checkAndUpdateReceipt(Receipt receipt);
 

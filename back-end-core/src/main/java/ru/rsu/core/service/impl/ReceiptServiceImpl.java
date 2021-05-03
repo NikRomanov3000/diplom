@@ -50,20 +50,26 @@ public class ReceiptServiceImpl implements ReceiptService {
 
   @Override
   @Transactional
-  public void updateReceipt(PaymentInfo paymentInfo) throws Exception {
+  public PaymentInfo updateReceipt(PaymentInfo paymentInfo) throws Exception {
     Optional<Receipt> receiptOptional = receiptRepository.findById(paymentInfo.getReceiptId());
     Receipt receiptForUpdate;
     try {
       if (receiptOptional.isEmpty()) {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                                          "Receipt with id: " + paymentInfo.getReceiptId()
-                                              + " doesn't exist");
+        String errorMsg = "Receipt with id: " + paymentInfo.getReceiptId()
+            + " doesn't exist";
+        logger.error(HttpStatus.BAD_REQUEST.toString() + " " + errorMsg);
+
+        paymentInfo.setStatusCode(400);
+        paymentInfo.setErrorMsg(errorMsg);
+        return paymentInfo;
       } else {
         receiptForUpdate = receiptOptional.get();
       }
     } catch (Exception ex) {
       logger.error(ex.getMessage());
-      throw new Exception(ex);
+      paymentInfo.setStatusCode(500);
+      paymentInfo.setErrorMsg(ex.getMessage());
+      return paymentInfo;
     }
 
     if (!paymentInfo.isDeleted()) {
@@ -82,6 +88,8 @@ public class ReceiptServiceImpl implements ReceiptService {
     logger.info("Receipt with id: " + receiptForUpdate.getId() + "was updated. New data: "
                     + receiptForUpdate.toString());
     addReceipt(receiptForUpdate);
+
+    return paymentInfo;
   }
 
   @Override
